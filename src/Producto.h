@@ -53,7 +53,7 @@ eProducto eProducto_ModificarUno(eProducto Producto);
 int eProducto_Alta(eProducto array[], int TAM);
 int eProducto_Baja(eProducto array[], int TAM);
 int eProducto_Modificacion(eProducto array[], int TAM);
-
+int eProducto_OrdenarPorStock(eProducto array[], int TAM, int criterio);
 
 /** FIN CABECERAS DE FUNCION*/
 #endif

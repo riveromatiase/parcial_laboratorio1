@@ -381,3 +381,64 @@ int eProducto_OrdenarPorDosCriterios(eProducto arrayProducto[], int TAM)
 	return respuesta;
 }
 
+int eProducto_OrdenarPorStock(eProducto array[], int TAM, int criterio) {
+	int rtn = -1;//no se pudo porque apunta a NULL
+	int i;
+	int j;
+	eProducto aux;
+
+	/** EJEMPLO DE SORT CON ID DE Producto
+	    MODIFICAR "CRITERIO DE ORDENAMIENTO" PARA OTROS CASOS DE ORDENAMIENTO
+	    CASE -1 -> MENOR A MAYOR (ASCENDENTE)
+	    CASE  1 -> MAYOR A MENOR (DESCENDENTE)
+
+	    UTILIZAR strcmp(...) PARA COMPARAR CADENAS
+	*/
+
+	//SI EXISTE EL ARRAY Y EL LIMITE ES VALIDO
+	if (array != NULL && TAM > 0) {
+		switch (criterio) {
+		case -1:
+			for (i = 0; i < TAM - 1; i++) {
+				for (j = i + 1; j < TAM; j++) {
+					//PREGUNTO POR ESTADO "OCUPADO" DE AMBOS
+					if (array[i].isEmpty == OCUPADO
+							&& array[j].isEmpty == OCUPADO) {
+						//CRITERIO DE ORDENAMIENTO
+						if (array[i].stock > array[j].stock) {
+							//INTERCAMBIO POSICIONES EN ARRAY
+							aux = array[i];
+							array[i] = array[j];
+							array[j] = aux;
+						}
+					}
+				}
+			}
+			rtn = 1;
+			break;
+		case 1:
+			for (i = 0; i < TAM - 1; i++) {
+				for (j = i + 1; j < TAM; j++) {
+					//PREGUNTO POR ESTADO "OCUPADO" DE AMBOS
+					if (array[i].isEmpty == OCUPADO
+							&& array[j].isEmpty == OCUPADO) {
+						//CRITERIO DE ORDENAMIENTO
+						if (array[i].categoria < array[j].categoria) {
+							//INTERCAMBIO POSICIONES EN ARRAY
+							aux = array[i];
+							array[i] = array[j];
+							array[j] = aux;
+						}
+					}
+				}
+			}
+			rtn = 0; //todo ok
+			break;
+		default:
+			//CRITERIO DE ORDENAMIENTO MAL INGRESADO
+			rtn = 1;//1 mal ingresado el orden
+			break;
+		}
+	}
+	return rtn;
+}

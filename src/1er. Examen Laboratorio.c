@@ -34,22 +34,22 @@ int main(void) {
 	eUsuario usuario[CANT_USU];
 	eTracking envio[CANT_ENVIOS];
 
-uRelaciones_CargaForzada(usuario, CANT_USU, producto, CANT_PROD, envio, CANT_ENVIOS);
+	uRelaciones_CargaForzada(usuario, CANT_USU, producto, CANT_PROD, envio, CANT_ENVIOS);
 
 
 	char auxiliarEmail[25];
 	char auxiliarcpassword[10];
 	int opcionMenuPrincipal;
-    int opcionMenuUsuario;
-    char opcionMenuAdmin;
-    int opcionMenuCategoriaProductos;
-    int idProductoAComprar;
-    int cantidadProductoAComprar;
-    float precioAPagar;
-    int indexUsuarioLogueado;
-    int indexProductoSeleccionado;
-    char auxiliarEstadoDeVentas;
-
+	int opcionMenuUsuario;
+	char opcionMenuAdmin;
+	int opcionMenuCategoriaProductos;
+	int idProductoAComprar;
+	int cantidadProductoAComprar;
+	float precioAPagar;
+	int indexUsuarioLogueado;
+	int indexProductoSeleccionado;
+	char auxiliarEstadoDeVentas;
+	int opcionAltaReponer;
 
 	do{
 		menuPrincipal();
@@ -76,25 +76,28 @@ uRelaciones_CargaForzada(usuario, CANT_USU, producto, CANT_PROD, envio, CANT_ENV
 
 					if(usuario[indexUsuarioLogueado].tipo==ADMIN){
 						menuAdmin();
-						utn_getChar(&opcionMenuAdmin, "Elija una opcion", "Error, elija opcion valida\n", 'a', 'e', 1);
+						utn_getChar(&opcionMenuAdmin, "Elija una opcion", "Error, elija opcion valida\n", 'a', 'f', 1);
 						switch(opcionMenuAdmin)
 						{
 						case 'a':
 							uRelaciones_EstadoUsuarios(usuario, CANT_USU);
-						break;
+							break;
 						case 'b':
 							uRelaciones_ProductosPorCategoria(producto, CANT_PROD);
-						break;
+							break;
 						case 'c':
 							uRelaciones_ProductosParaDarDeBaja(producto, CANT_PROD);
 
-						break;
+							break;
 						case 'd':
 							uRelaciones_UsuariosParaDarDeBaja(usuario, CANT_USU);
-						break;
+							break;
 						case 'e':
 							uRelaciones_TrackingGlobal(usuario, CANT_USU, producto, CANT_PROD, envio, CANT_ENVIOS);
-						break;
+							break;
+						case 'f'://filtar por nombre de producto
+							menu_ReposicionProductos(usuario, CANT_USU, producto, CANT_PROD, indexUsuarioLogueado);
+							break;
 						}//fin switch opcion MENU ADMIN
 					}else{
 						menuUsuario();
@@ -132,22 +135,28 @@ uRelaciones_CargaForzada(usuario, CANT_USU, producto, CANT_PROD, envio, CANT_ENV
 
 								puts("*** Vamos a generar el pedido de envio ***");
 								producto[indexProductoSeleccionado].stock=producto[indexProductoSeleccionado].stock - cantidadProductoAComprar;
-									if(eTracking_Alta(envio, CANT_ENVIOS,cantidadProductoAComprar, precioAPagar, usuario->idUsuario, producto->idProducto, usuario->codPostal)==1){
-										//puts("*** EL ENVIO FUE PROGRAMADO CON EXITO ***\n");
-										//printf("el envio llegar %ld\n\n",envio->horaLlegada);
-									}else{
-										puts("*** NO SE PUDO CARGAR LA COMPRA. LO SENTIMOS\n");
+								if(eTracking_Alta(envio, CANT_ENVIOS,cantidadProductoAComprar, precioAPagar, usuario->idUsuario, producto->idProducto, usuario->codPostal)==1){
+									//puts("*** EL ENVIO FUE PROGRAMADO CON EXITO ***\n");
+									//printf("el envio llegar %ld\n\n",envio->horaLlegada);
+								}else{
+									puts("*** NO SE PUDO CARGAR LA COMPRA. LO SENTIMOS\n");
 
-									}
+								}
 							}
 
 							break;
 						case 2://vender alta producto
-							menu_CategoriasProductos();
-							get_numeroint(&opcionMenuCategoriaProductos, 2, "Elija una opcion de categoria del producto", "Error, no es un opcion valida\n", 1, 0, 4, 3, 0);
-							eProducto_Alta(producto, CANT_PROD);
-							puts("*** EL PRODUCTO FUE DADO DE ALTA, YA SE ENCUENTRA DISPONIBLE ***\n");
+							menu_AltaReposicionProductos();
+							utn_getNumero(&opcionAltaReponer, "Elija la opcion que desea realizar", "Error, ingrese una opcion valida", 0, 2, 3);
 
+							if(opcionAltaReponer==1){
+								menu_CategoriasProductos();
+								get_numeroint(&opcionMenuCategoriaProductos, 2, "Elija una opcion de categoria del producto", "Error, no es un opcion valida\n", 1, 0, 4, 3, 0);
+								eProducto_Alta(producto, CANT_PROD);
+								puts("*** EL PRODUCTO FUE DADO DE ALTA, YA SE ENCUENTRA DISPONIBLE ***\n");
+							}else{
+								menu_ReposicionProductos(usuario, CANT_USU, producto, CANT_PROD, indexUsuarioLogueado);
+							}
 							break;
 						case 3:
 							uRelaciones_informarEstadoDeEnvios(usuario, CANT_USU, producto, CANT_PROD, envio, CANT_ENVIOS, indexUsuarioLogueado);
@@ -168,10 +177,10 @@ uRelaciones_CargaForzada(usuario, CANT_USU, producto, CANT_PROD, envio, CANT_ENV
 						}//fin switch menu usuario
 					}
 
-//MOSTAR EL MENU DEPENDIENDO SI ES USUARIO O ADMINISTRADOR
+					//MOSTAR EL MENU DEPENDIENDO SI ES USUARIO O ADMINISTRADOR
 				}else{
 					puts("Contraseña invalida\n");
-			}
+				}
 			}else{
 				puts("el correo ingresado es invalido\n");
 			}
@@ -183,7 +192,7 @@ uRelaciones_CargaForzada(usuario, CANT_USU, producto, CANT_PROD, envio, CANT_ENV
 			{
 				puts("Usuario dado de alta correctamente!\n");
 			}
-            //break;
+			//break;
 		}
 
 

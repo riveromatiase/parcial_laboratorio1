@@ -72,3 +72,13 @@ void menu_EstadoDeVentas(void){
 //	utn_getChar(&auxiliarEstadoDeVentas, "Elija una opcion", "Error, elija opcion valida\n", 'a', 'b', 2);
 
 }
+
+
+void menu_AltaReposicionProductos(void){//MENU USUARIO opcion 2) para VENDER
+	puts("\t\t*** ALTA-REPOSICION DE PRODUCTOS ***");
+	puts("1) ALTA");
+	puts("2) REPOSICION");
+	puts("\nopcion ");
+//	utn_getNumero(&opcionAltaReponer, mensaje, "Error ingrese una opcion valida", 1, 2, 3);
+}
+

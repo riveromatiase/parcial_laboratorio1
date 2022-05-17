@@ -15,5 +15,6 @@ void menuUsuario(void);
 void menuAdmin(void);
 void menu_CategoriasProductos(void);
 void menu_EstadoDeVentas(void);
+void menu_AltaReposicionProductos(void);
 
 #endif /* MENU_H_ */

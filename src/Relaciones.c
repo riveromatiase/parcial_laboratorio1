@@ -395,3 +395,77 @@ int uRelaciones_TrackingGlobal(eUsuario arrayUsuario[], int TAM_usuario, eProduc
 
 	return retorno;
 }
+
+
+int uRelaciones_ProductosdeunID(eUsuario arrayUsuario[], int TAM_usuario, eProducto arrayProducto[], int TAM_producto, int indexUsuarioLogueado){
+	int retorno=-1;
+	int banderaproducto=0;
+	int opcionIDparareponer;
+	int opcionCantidad;
+	printf("*** PRODUCTOS EN VENTA DEL USUARIO ***\n");
+	printf("ID        nombre        stock\n");
+	if(arrayProducto !=NULL && arrayUsuario!=NULL)
+	{
+	if(arrayUsuario!=NULL && arrayProducto != NULL){
+		for(int i=0;i<=TAM_producto;i++)
+		{
+			if(arrayUsuario[indexUsuarioLogueado].idUsuario == arrayProducto[i].Fk_idUsuarioVendedor){
+				//printf("*** PRODUCTOS EN VENTA DEL USUARIO ***");
+				//printf("ID        nombre        stock\n");
+				printf(" %i           %s             &d\n",arrayProducto[i].idProducto, arrayProducto[i].nombreProducto, arrayProducto[i].stock);
+			banderaproducto=1;
+			}
+		}
+	}
+	}
+
+if(banderaproducto==1)
+{
+	utn_getNumero(&opcionIDparareponer, "Indique sobre que ID de producto desea reponer", "Error, el id no es correcto", 100, TAM_producto, 3);
+	for(int i=0;i<=TAM_producto;i++)
+	{
+		if(arrayProducto[i].idProducto == opcionIDparareponer){
+			utn_getNumero(&opcionCantidad, "INGRESE LA CANTIDAD DE PRODUCTOS QUE DESEA AGREAGAR", "Error\n", 1, 1000, 2);
+			arrayProducto[i].stock=arrayProducto[i].stock + opcionCantidad;
+		}else{
+			puts("NO HAY PRODUCTOS PARA REPONER EN EL ID SELECCIONADO");
+		}
+	}
+}
+if(banderaproducto==0)
+{
+	puts("NO TIENE PRODUCTO A LA VENTA EL USUARIO\n");
+}
+	return retorno;
+}
+
+void menu_ReposicionProductos(eUsuario arrayUsuario[], int TAM_usuario, eProducto arrayProducto[], int TAM_producto, int indexUsuarioLogueado){//MENU USUARIO opcion 2) para VENDER
+	puts("\t\t***REPOSICION DE PRODUCTOS ***");
+	uRelaciones_ProductosdeunID(arrayUsuario, TAM_usuario, arrayProducto, TAM_producto, indexUsuarioLogueado);
+
+//	utn_getNumero(&opcionAltaReponer, mensaje, "Error ingrese una opcion valida", 1, 2, 3);
+}
+
+
+void menu_RelacionesBuscarPorNombre(eUsuario arrayUsuario[], int TAM_usuario, eProducto arrayProducto[], int TAM_producto, char nombreProducto){
+	int banderanombres=0;
+	if(arrayProducto!=NULL && arrayUsuario!=NULL &&TAM_producto>0 && TAM_usuario>0)
+	{
+		for(int i=0;i<=TAM_producto;i++){
+			if((strcmp(nombreProducto,arrayProducto[i].nombreProducto)==0))
+			{
+				if(eProducto_OrdenarPorStock(arrayProducto, TAM_producto, -1)==1){
+					printf("*** PRODUCTOS CON EL MISMO NOMBRE\n");
+					printf("ID      STOCK      ID VENDEDOR\n");
+					printf("%i        %d            %i",arrayProducto[i].idProducto, arrayProducto[i].stock, arrayProducto[i].Fk_idUsuarioVendedor);
+				banderanombres=1;
+				}
+			}
+		}
+	}
+
+	if(banderanombres==0){
+		puts("*** NO HAY NOMBRES DE PRODUCTOS REPEDITOS ***");
+	}
+
+}

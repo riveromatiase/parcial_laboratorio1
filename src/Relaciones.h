@@ -18,6 +18,9 @@ int uRelaciones_informarEstadoDeVentas(eUsuario arrayUsuario[], int TAM_usuario,
 int uRelaciones_VerTodosLosProductos(eUsuario arrayUsuario[], int TAM_usuario, eProducto arrayProducto[], int TAM_producto, eTracking arrayTracking[], int TAM_tracking, int indexUsuarioLogueado);
 double uRelaciones_DiferenciaEntreHoras(long int horallegada);
 
+void menu_ReposicionProductos(eUsuario arrayUsuario[], int TAM_usuario, eProducto arrayProducto[], int TAM_producto, int indexUsuarioLogueado);
+void menu_RelacionesBuscarPorNombre(eUsuario arrayUsuario[], int TAM_usuario, eProducto arrayProducto[], int TAM_producto, char nombreProducto);
+
 int uRelaciones_EstadoUsuarios(eUsuario arrayUsuario[], int TAM_usuario);
 int uRelaciones_ProductosPorCategoria(eProducto arrayProducto[], int TAM_producto);
 int uRelaciones_ProductosParaDarDeBaja(eProducto arrayProducto[], int TAM_producto);
