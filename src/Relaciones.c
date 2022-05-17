@@ -465,7 +465,7 @@ void menu_RelacionesBuscarPorNombre(eUsuario arrayUsuario[], int TAM_usuario, eP
 	}
 
 	if(banderanombres==0){
-		puts("*** NO HAY NOMBRES DE PRODUCTOS REPEDITOS ***");
+		puts("**** NO HAY NOMBRES DE PRODUCTOS REPEDITOS ****");
 	}
 
 }
